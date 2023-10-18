@@ -2,16 +2,15 @@ import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 
 const typeDefs = `#graphql
-#the way we fetch data
 type Query {
-  hello: String
+  hello: [String!]!
 }
 `;
 
 const resolvers = {
   Query: {
     hello: () => {
-      return "Hello! :D";
+      return ["hello", "my", "good", "friend"];
     },
   },
 };
