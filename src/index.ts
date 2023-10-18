@@ -1,16 +1,35 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
+import { products } from "./data";
 
 const typeDefs = `#graphql
+type Product {
+  id: ID!
+  name: String!
+  description: String!
+  quantity: Int!
+  price: Float!
+  image: String!
+  onSale: Boolean!
+}
+
+input ProductInput {
+  id: ID!
+}
+
 type Query {
-  hello: [String!]!
+  products: [Product!]!
+  product(input: ProductInput): Product
 }
 `;
 
 const resolvers = {
   Query: {
-    hello: () => {
-      return ["hello", "my", "good", "friend"];
+    products: () => {
+      return products;
+    },
+    product: (_, { input }) => {
+      return products.find((product) => product.id === input.id);
     },
   },
 };
